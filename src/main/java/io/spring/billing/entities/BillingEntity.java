@@ -1,4 +1,4 @@
-package io.spring.garage.entities;
+package io.spring.billing.entities;
 
 public interface BillingEntity {
 
