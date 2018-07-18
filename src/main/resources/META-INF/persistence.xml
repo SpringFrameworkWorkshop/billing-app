@@ -7,10 +7,10 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <!-- Entity classes -->
-        <class>io.spring.garage.entities.Client</class>
-        <class>io.spring.garage.entities.Product</class>
-        <class>io.spring.garage.entities.Bill</class>
-        <class>io.spring.garage.entities.Line</class>
+        <class>io.spring.billing.entities.Client</class>
+        <class>io.spring.billing.entities.Product</class>
+        <class>io.spring.billing.entities.Bill</class>
+        <class>io.spring.billing.entities.Line</class>
 
         <properties>
             <!-- The JDBC URL to the database instance -->

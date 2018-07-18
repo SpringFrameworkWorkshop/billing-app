@@ -1,4 +1,4 @@
-package io.spring.garage;
+package io.spring.billing;
 
 import io.spring.commandlinemenu.Menu;
 import io.spring.commandlinemenu.MenuBuilder;
