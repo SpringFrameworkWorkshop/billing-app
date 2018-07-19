@@ -1,24 +1,32 @@
 package io.spring.billing.manager;
 
-import io.spring.billing.dao.BillDAO;
 import io.spring.billing.entities.Bill;
+import io.spring.billing.repositories.BillRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+@Service
 public class BillManager extends AbstractManager<Bill> {
 
-	private static BillManager instance;
+    private BillRepository repository;
 
-	private BillManager() {
-	}
+    @Autowired
+    public BillManager(final BillRepository repository) {
+        this.repository = repository;
+    }
 
-	public static BillManager getInstance() {
-		if (instance == null) {
-			instance = new BillManager();
-		}
-		return instance;
-	}
+    @Override
+    public BillRepository getRepository() {
+        return repository;
+    }
 
-	@Override
-	public BillDAO getDao() {
-		return BillDAO.getInstance();
-	}
+    public Bill fetchByIdWithClientWithLinesWithProduct(final Long id) {
+        return repository.fetchByIdWithClientWithLinesWithProduct(id);
+    }
+
+    public List<Bill> findAllByClientId(final Long id) {
+        return repository.findAllByClientId(id);
+    }
 }

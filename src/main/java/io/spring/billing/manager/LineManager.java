@@ -1,24 +1,22 @@
 package io.spring.billing.manager;
 
-import io.spring.billing.dao.LineDAO;
 import io.spring.billing.entities.Line;
+import io.spring.billing.repositories.LineRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class LineManager extends AbstractManager<Line> {
 
-	private static LineManager instance;
+    private LineRepository repository;
 
-	private LineManager() {
-	}
+    @Autowired
+    public LineManager(final LineRepository repository) {
+        this.repository = repository;
+    }
 
-	public static LineManager getInstance() {
-		if (instance == null) {
-			instance = new LineManager();
-		}
-		return instance;
-	}
-
-	@Override
-	public LineDAO getDao() {
-		return LineDAO.getInstance();
-	}
+    @Override
+    public LineRepository getRepository() {
+        return repository;
+    }
 }

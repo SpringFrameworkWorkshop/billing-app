@@ -1,29 +1,28 @@
 package io.spring.billing.manager;
 
-import io.spring.billing.dao.AbstractDAO;
 import io.spring.billing.entities.BillingEntity;
+import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
 public abstract class AbstractManager<T extends BillingEntity> {
 
-
-    public abstract AbstractDAO<T> getDao();
-
+    public abstract CrudRepository<T, Long> getRepository();
 
     public List<T> findAll() {
-        return getDao().findAll();
+        return (List<T>) this.getRepository().findAll();
     }
 
-    public void save(final T element) {
-        getDao().save(element);
+    public T save(final T element) {
+        return this.getRepository().save(element);
     }
 
     public void delete(final T element) {
-        getDao().delete(element);
+        this.getRepository().delete(element);
     }
 
     public T get(final long id) {
-        return getDao().get(id);
+        return this.getRepository().findById(id).get();
     }
+
 }

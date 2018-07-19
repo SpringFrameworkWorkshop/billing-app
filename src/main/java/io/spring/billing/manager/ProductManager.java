@@ -1,24 +1,28 @@
 package io.spring.billing.manager;
 
-import io.spring.billing.dao.ProductDAO;
 import io.spring.billing.entities.Product;
+import io.spring.billing.repositories.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+@Service
 public class ProductManager extends AbstractManager<Product> {
 
-	private static ProductManager instance;
+    private ProductRepository repository;
 
-	private ProductManager() {
-	}
+    @Autowired
+    public ProductManager(final ProductRepository repository) {
+        this.repository = repository;
+    }
 
-	public static ProductManager getInstance() {
-		if (instance == null) {
-			instance = new ProductManager();
-		}
-		return instance;
-	}
+    @Override
+    public ProductRepository getRepository() {
+        return repository;
+    }
 
-	@Override
-	public ProductDAO getDao() {
-		return ProductDAO.getInstance();
-	}
+    public List<Product> findByName(String term) {
+        return repository.findByNameLikeIgnoreCase("%"+term+"%");
+    }
 }

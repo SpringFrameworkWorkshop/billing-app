@@ -27,8 +27,8 @@ public class Client implements BillingEntity {
     @NotNull
     private String email;
 
-    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Bill> bills = new ArrayList<>();
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<Bill> bills;
 
     @Embedded
     private Audit audit = new Audit();
