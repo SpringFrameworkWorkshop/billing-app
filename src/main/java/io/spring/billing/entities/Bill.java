@@ -26,7 +26,7 @@ public class Bill implements BillingEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     private Client client;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "bill_id")
     private List<Line> lines = new ArrayList<>();
 
