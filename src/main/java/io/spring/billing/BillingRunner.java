@@ -5,6 +5,8 @@ import io.spring.commandlinemenu.MenuBuilder;
 
 import java.util.Scanner;
 
+import static java.lang.System.exit;
+
 
 public class BillingRunner {
 
@@ -59,6 +61,8 @@ public class BillingRunner {
         } while (option != null);
 
         System.out.println("GOOD BYE");
+
+        exit(0);
 
     }
 
