@@ -22,12 +22,12 @@ public class Product implements BillingEntity {
     @NotNull
     private Double price;
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "create_at")
-    private Date createAt;
+    @Embedded
+    private Audit audit = new Audit();
 
-    @PrePersist
-    public void prePersist() {
-        createAt = new Date();
+    @Override
+    public String toString() {
+        return String.format("\t\n{id: %s, name: %s, price: %s}",
+                getId(), getName(), getPrice());
     }
 }

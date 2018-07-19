@@ -1,9 +1,19 @@
 package io.spring.billing;
 
+import io.spring.billing.entities.Bill;
+import io.spring.billing.entities.Client;
+import io.spring.billing.entities.Line;
+import io.spring.billing.entities.Product;
+import io.spring.billing.manager.BillManager;
+import io.spring.billing.manager.ClientManager;
+import io.spring.billing.manager.LineManager;
+import io.spring.billing.manager.ProductManager;
 import io.spring.commandlinemenu.Menu;
 import io.spring.commandlinemenu.MenuBuilder;
 
 import java.util.Scanner;
+
+import static java.lang.System.exit;
 
 
 public class BillingRunner {
@@ -60,6 +70,8 @@ public class BillingRunner {
 
         System.out.println("GOOD BYE");
 
+        exit(0);
+
     }
 
     private static Menu generateMenu() {
@@ -98,43 +110,88 @@ public class BillingRunner {
     }
 
     private static Client selectClient() {
-        //TODO:
-        return null;
+        System.out.println(ClientManager.getInstance().findAll());
+        System.out.println("Select an element of the list");
+        int element = in.nextInt();
+        return ClientManager.getInstance().get(element);
     }
 
     private static Product selectProduct() {
-        //TODO:
-        return null;
+        System.out.println(ProductManager.getInstance().findAll());
+        System.out.println("Select an element of the list");
+        int element = in.nextInt();
+        return ProductManager.getInstance().get(element);
     }
 
     private static Bill selectBill() {
-        //TODO:
-        return null;
+        System.out.println(BillManager.getInstance().findAll());
+        System.out.println("Select an element of the list");
+        int element = in.nextInt();
+        return BillManager.getInstance().get(element);
     }
 
     private static Line selectLine() {
-        //TODO:
-        return null;
+        System.out.println(LineManager.getInstance().findAll());
+        System.out.println("Select an element of the list");
+        int element = in.nextInt();
+        return LineManager.getInstance().get(element);
     }
 
     private static Client clientBuilder() {
-        //TODO:
-        return null;
+        System.out.println("Set the name value");
+        String name = in.nextLine();
+        System.out.println("Set the surname value");
+        String surname = in.nextLine();
+        System.out.println("Set the  email value");
+        String email = in.nextLine();
+
+        final Client client = new Client();
+        client.setName(name);
+        client.setSurname(surname);
+        client.setEmail(email);
+        return client;
     }
 
     private static Product productBuilder() {
-        //TODO:
-        return null;
+        System.out.println("Set the name value");
+        String name = in.nextLine();
+        System.out.println("Set the price value");
+        Double price = in.nextDouble();
+
+        final Product product = new Product();
+        product.setName(name);
+        product.setPrice(price);
+        return product;
     }
 
     private static Bill billBuilder() {
-        //TODO:
-        return null;
+        System.out.println("Set the description value");
+        String description = in.nextLine();
+        System.out.println("Set the observation value");
+        String observation = in.nextLine();
+        System.out.println("Set the client id value");
+        Long client = in.nextLong();
+
+        final Bill bill = new Bill();
+        bill.setDescription(description);
+        bill.setObservation(observation);
+        bill.setClient(ClientManager.getInstance().get(client));
+        return bill;
     }
 
     private static Line lineBuilder() {
-        //TODO:
-        return null;
+        System.out.println("Set the quantity value");
+        Integer quantity = in.nextInt();
+        System.out.println("Set the product id value");
+        Long product = in.nextLong();
+        System.out.println("Set the bill id value");
+        Long bill = in.nextLong();
+
+        final Line line = new Line();
+        line.setQuantity(quantity);
+        line.setProduct(ProductManager.getInstance().get(product));
+        line.setBill(BillManager.getInstance().get(bill));
+        return line;
     }
 
 }

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,12 +27,16 @@ public class Client implements BillingEntity {
     @NotNull
     private String email;
 
-    @NotNull
-    @Column(name = "create_at")
-    @Temporal(TemporalType.DATE)
-    private Date createAt;
-
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Bill> bills;
+    private List<Bill> bills = new ArrayList<>();
+
+    @Embedded
+    private Audit audit = new Audit();
+
+    @Override
+    public String toString() {
+        return String.format("\t\n{id: %s, name: %s, surname: %s, email: %s}",
+                getId(), getName(), getSurname(), getEmail());
+    }
 
 }
