@@ -1,6 +1,7 @@
 package io.spring.billing.entities;
 
 import com.sun.istack.internal.NotNull;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@EqualsAndHashCode(of = {"id"})
 public class Client implements BillingEntity {
 
     @Id
