@@ -3,7 +3,7 @@ package io.spring.billing.manager;
 import io.spring.billing.dao.ProductDAO;
 import io.spring.billing.entities.Product;
 
-public class ProductManager extends AbstractManager<Product> {
+public class ProductManager extends AbstractBillingManager<Product> {
 
 	private static ProductManager instance;
 

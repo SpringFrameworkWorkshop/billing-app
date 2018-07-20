@@ -3,7 +3,7 @@ package io.spring.billing.manager;
 import io.spring.billing.dao.LineDAO;
 import io.spring.billing.entities.Line;
 
-public class LineManager extends AbstractManager<Line> {
+public class LineManager extends AbstractBillingManager<Line> {
 
 	private static LineManager instance;
 
