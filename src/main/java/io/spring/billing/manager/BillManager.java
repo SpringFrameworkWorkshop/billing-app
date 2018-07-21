@@ -19,14 +19,14 @@ public class BillManager extends AbstractManager<Bill> {
 
     @Override
     public BillRepository getRepository() {
-        return repository;
+        return this.repository;
     }
 
     public Bill fetchByIdWithClientWithLinesWithProduct(final Long id) {
-        return repository.fetchByIdWithClientWithLinesWithProduct(id);
+        return this.repository.fetchByIdWithClientWithLinesWithProduct(id);
     }
 
     public List<Bill> findAllByClientId(final Long id) {
-        return repository.findAllByClientId(id);
+        return this.repository.findAllByClientId(id);
     }
 }

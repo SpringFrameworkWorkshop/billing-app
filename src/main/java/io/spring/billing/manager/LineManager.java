@@ -17,6 +17,10 @@ public class LineManager extends AbstractManager<Line> {
 
     @Override
     public LineRepository getRepository() {
-        return repository;
+        return this.repository;
+    }
+
+    public long findAmountSold(final Long productId) {
+        return this.repository.findAmountSold(productId);
     }
 }

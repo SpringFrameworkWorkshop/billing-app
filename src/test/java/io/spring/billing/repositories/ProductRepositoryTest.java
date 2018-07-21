@@ -2,7 +2,7 @@ package io.spring.billing.repositories;
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
-import io.spring.billing.entities.Line;
+import io.spring.billing.entities.Product;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,10 +24,10 @@ import java.util.List;
         TransactionalTestExecutionListener.class,
         DbUnitTestExecutionListener.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class LineRepositoryTest {
+public class ProductRepositoryTest {
 
     @Autowired
-    private LineRepository repository;
+    private ProductRepository repository;
 
     @Autowired
     private ProductRepository productRepository;
@@ -39,51 +39,60 @@ public class LineRepositoryTest {
     @DatabaseSetup("/db/billing.xml")
     public void testFindAll() {
         // Act
-        List<Line> all = (List<Line>) this.repository.findAll();
+        List<Product> all = (List<Product>) this.repository.findAll();
 
         // Assert
-        Assert.assertEquals(6, all.size());
+        Assert.assertEquals(8, all.size());
     }
 
     @Test
     @DatabaseSetup("/db/billing.xml")
-    public void testGetAmountSold() {
+    public void testFindByPriceGreaterThanEqual() {
         // Act
-        long amount = this.repository.findAmountSold(1L);
+        List<Product> all = this.repository.findByPriceGreaterThanEqual(100.0);
 
         // Assert
-        Assert.assertEquals(6, amount);
+        Assert.assertEquals(3, all.size());
+    }
+
+    @Test
+    @DatabaseSetup("/db/billing.xml")
+    public void testFindByName() {
+        // Act
+        List<Product> all = this.repository.findByName("TRUM");
+
+        // Assert
+        Assert.assertEquals(0, all.size());
     }
 
     @Test
     @DatabaseSetup("/db/billing.xml")
     public void testSave() {
         // Arrange
-        final Line line = new Line();
-        line.setQuantity(2);
-        line.setProduct(this.productRepository.findById(1L).get());
-        line.setBill(this.billRepository.findById(1L).get());
+        final Product product = new Product();
+        product.setName("A");
+        product.setPrice(100.0);
 
         // Act
-        this.repository.save(line);
+        this.repository.save(product);
 
         // Assert
-        List<Line> all = (List<Line>) this.repository.findAll();
-        Assert.assertEquals(7, all.size());
+        List<Product> all = (List<Product>) this.repository.findAll();
+        Assert.assertEquals(9, all.size());
     }
 
     @Test
     @DatabaseSetup("/db/billing.xml")
     public void testDelete() {
         // Arrange
-        final Line line = this.repository.findById(1L).get();
+        final Product product = this.repository.findById(3L).get();
 
         // Act
-        this.repository.delete(line);
+        this.repository.delete(product);
 
         // Assert
-        List<Line> all = (List<Line>) this.repository.findAll();
-        Assert.assertEquals(5, all.size());
+        List<Product> all = (List<Product>) this.repository.findAll();
+        Assert.assertEquals(7, all.size());
     }
 
 }

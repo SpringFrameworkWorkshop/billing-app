@@ -2,7 +2,7 @@ package io.spring.billing.repositories;
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
-import io.spring.billing.entities.Line;
+import io.spring.billing.entities.Bill;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,66 +24,74 @@ import java.util.List;
         TransactionalTestExecutionListener.class,
         DbUnitTestExecutionListener.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class LineRepositoryTest {
+public class BillRepositoryTest {
 
     @Autowired
-    private LineRepository repository;
+    private BillRepository repository;
 
     @Autowired
-    private ProductRepository productRepository;
-
-    @Autowired
-    private BillRepository billRepository;
+    private ClientRepository clientRepository;
 
     @Test
     @DatabaseSetup("/db/billing.xml")
     public void testFindAll() {
         // Act
-        List<Line> all = (List<Line>) this.repository.findAll();
+        List<Bill> all = (List<Bill>) this.repository.findAll();
 
         // Assert
-        Assert.assertEquals(6, all.size());
+        Assert.assertEquals(8, all.size());
     }
 
     @Test
     @DatabaseSetup("/db/billing.xml")
-    public void testGetAmountSold() {
+    public void testFindAllByClientId() {
         // Act
-        long amount = this.repository.findAmountSold(1L);
+        List<Bill> all =this.repository.findAllByClientId(1L);
 
         // Assert
-        Assert.assertEquals(6, amount);
+        Assert.assertEquals(4, all.size());
+    }
+
+    @Test
+    @DatabaseSetup("/db/billing.xml")
+    public void testFetchByIdWithClientWithLinesWithProduct() {
+        // Act
+        Bill bill =this.repository.fetchByIdWithClientWithLinesWithProduct(1L);
+
+        // Assert
+        Assert.assertEquals(1, (long)bill.getClient().getId());
+        Assert.assertEquals(2, bill.getLines().size());
     }
 
     @Test
     @DatabaseSetup("/db/billing.xml")
     public void testSave() {
         // Arrange
-        final Line line = new Line();
-        line.setQuantity(2);
-        line.setProduct(this.productRepository.findById(1L).get());
-        line.setBill(this.billRepository.findById(1L).get());
+        final Bill bill = new Bill();
+        bill.setDescription("A");
+        bill.setObservation("B");
+        bill.setClient(this.clientRepository.findById(1L).get());
 
         // Act
-        this.repository.save(line);
+        this.repository.save(bill);
 
         // Assert
-        List<Line> all = (List<Line>) this.repository.findAll();
-        Assert.assertEquals(7, all.size());
+        List<Bill> all = (List<Bill>) this.repository.findAll();
+        Assert.assertEquals(9, all.size());
     }
 
     @Test
     @DatabaseSetup("/db/billing.xml")
     public void testDelete() {
         // Arrange
-        final Line line = this.repository.findById(1L).get();
+        final Bill bill = this.repository.findById(1L).get();
 
         // Act
-        this.repository.delete(line);
+        this.repository.delete(bill);
 
         // Assert
-        List<Line> all = (List<Line>) this.repository.findAll();
-        Assert.assertEquals(5, all.size());
+        List<Bill> all = (List<Bill>) this.repository.findAll();
+        Assert.assertEquals(7, all.size());
     }
 
 }

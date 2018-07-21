@@ -19,10 +19,14 @@ public class ProductManager extends AbstractManager<Product> {
 
     @Override
     public ProductRepository getRepository() {
-        return repository;
+        return this.repository;
     }
 
-    public List<Product> findByName(String term) {
-        return repository.findByNameLikeIgnoreCase("%"+term+"%");
+    public List<Product> findByPriceGreaterThanEqual(final Double price) {
+        return this.repository.findByPriceGreaterThanEqual(price);
+    }
+
+    public List<Product> findByName(final String term) {
+        return this.repository.findByName(term);
     }
 }
