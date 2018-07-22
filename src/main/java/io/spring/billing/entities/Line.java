@@ -1,5 +1,6 @@
 package io.spring.billing.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.internal.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -24,6 +25,7 @@ public class Line implements BillingEntity {
     @JoinColumn(name="product_id")
     private Product product;
 
+    @JsonIgnore
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="bill_id")
     private Bill bill;
