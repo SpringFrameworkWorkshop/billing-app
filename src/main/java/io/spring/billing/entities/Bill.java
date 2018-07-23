@@ -6,7 +6,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -26,12 +29,27 @@ public class Bill implements BillingEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     private Client client;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "bill_id")
     private List<Line> lines;
 
     @Embedded
     private Audit audit = new Audit();
+
+    public void addLine(Line line) {
+        if (lines == null) {
+            lines = new ArrayList<>();
+        }
+        lines.add(line);
+    }
+
+    public Double getTotal() {
+        Double total = 0.0;
+        for (Line line : Optional.ofNullable(lines).orElse(Collections.emptyList())) {
+            total += line.calculateAmount();
+        }
+        return total;
+    }
 
     @Override
     public String toString() {

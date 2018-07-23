@@ -72,18 +72,4 @@ public class LineRepositoryTest {
         Assert.assertEquals(7, all.size());
     }
 
-    @Test
-    @DatabaseSetup("/db/billing.xml")
-    public void testDelete() {
-        // Arrange
-        final Line line = this.repository.findById(1L).get();
-
-        // Act
-        this.repository.delete(line);
-
-        // Assert
-        List<Line> all = (List<Line>) this.repository.findAll();
-        Assert.assertEquals(5, all.size());
-    }
-
 }

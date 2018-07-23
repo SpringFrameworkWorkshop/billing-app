@@ -31,6 +31,10 @@ public class Line implements BillingEntity {
     @Embedded
     private Audit audit = new Audit();
 
+    public Double calculateAmount() {
+        return quantity.doubleValue() * product.getPrice();
+    }
+
     @Override
     public String toString() {
         return String.format("\t\n{id: %s, quantity: %s, product: %s, bill: %s}",

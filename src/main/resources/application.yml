@@ -5,6 +5,9 @@ spring:
     password: a
     driver-class-name: org.h2.Driver
 
+  thymeleaf:
+    cache: false
+
 ---
 spring:
   profiles: prod
