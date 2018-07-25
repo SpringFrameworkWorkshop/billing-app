@@ -4,6 +4,7 @@ import io.spring.billing.entities.BillingEntity;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public abstract class AbstractManager<T extends BillingEntity> {
 
@@ -22,7 +23,7 @@ public abstract class AbstractManager<T extends BillingEntity> {
     }
 
     public T get(final long id) {
-        return this.getRepository().findById(id).get();
+        return this.getRepository().findById(id).orElse(null);
     }
 
 }
