@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -32,7 +35,7 @@ public class ClientController {
         return "clients";
     }
 
-    @GetMapping(value = "/client-details/{id}")
+    @RequestMapping(value = "/client-details/{id}", method = RequestMethod.GET)
     public String details(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash) {
 
         Client client = clientManager.fetchByIdWithBills(id);
@@ -47,7 +50,7 @@ public class ClientController {
         return "client-details";
     }
 
-    @RequestMapping(value = "/client-delete/{id}")
+    @RequestMapping(value = "/client-delete/{id}", method = RequestMethod.GET)
     public String delete(@PathVariable(value = "id") Long id, RedirectAttributes flash) {
 
         Client client = clientManager.get(id);
@@ -62,7 +65,7 @@ public class ClientController {
         return "redirect:/clients";
     }
 
-    @RequestMapping(value = "/client-form")
+    @RequestMapping(value = "/client-form", method = RequestMethod.GET)
     public String create(Map<String, Object> model) {
         Client client = new Client();
         model.put("client", client);
@@ -70,7 +73,7 @@ public class ClientController {
         return "client-form";
     }
 
-    @PostMapping(value = "/client-new")
+    @RequestMapping(value = "/client-new", method = RequestMethod.POST)
     public String save(@Valid Client client, BindingResult result, Model model, RedirectAttributes flash, SessionStatus status) {
 
         if (result.hasErrors()) {

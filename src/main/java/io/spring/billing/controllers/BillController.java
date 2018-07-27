@@ -33,7 +33,7 @@ public class BillController {
     @Autowired
     private ProductManager productManager;
 
-    @GetMapping("/bill-details/{id}")
+    @RequestMapping(value = "/bill-details/{id}", method = RequestMethod.GET)
     public String details(@PathVariable(value = "id") Long id, Model model, RedirectAttributes flash) {
 
         Bill bill = billManager.fetchByIdWithClientWithLinesWithProduct(id);
@@ -47,7 +47,7 @@ public class BillController {
         return "bill-details";
     }
 
-    @GetMapping("/bill-delete/{id}")
+    @RequestMapping(value = "/bill-delete/{id}", method = RequestMethod.GET)
     public String delete(@PathVariable(value = "id") Long id, RedirectAttributes flash) {
 
         Bill bill = billManager.get(id);
@@ -62,7 +62,7 @@ public class BillController {
         return "redirect:/clients";
     }
 
-    @GetMapping("/bill-new/{clientId}")
+    @RequestMapping(value = "/bill-new/{clientId}", method = RequestMethod.GET)
     public String create(@PathVariable(value = "clientId") Long clientId, Map<String, Object> model, RedirectAttributes flash) {
 
         Client client = clientManager.get(clientId);
@@ -81,7 +81,7 @@ public class BillController {
         return "bill-form";
     }
 
-    @PostMapping("/bill-new")
+    @RequestMapping(value = "/bill-new", method = RequestMethod.POST)
     public String save(@Valid Bill bill, BindingResult result, Model model,
                           @RequestParam(name = "item_id[]", required = false) Long[] itemId,
                           @RequestParam(name = "quantity[]", required = false) Integer[] quantity, RedirectAttributes flash,
