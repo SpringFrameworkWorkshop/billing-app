@@ -22,7 +22,7 @@ public class ProductControllerImpl extends AbstractController<Product, ProductDT
     }
 
     @Override
-    protected AbstractManager<Product> getManager() {
+    protected ProductManager getManager() {
         return this.manager;
     }
 

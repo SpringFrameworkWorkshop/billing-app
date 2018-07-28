@@ -22,7 +22,7 @@ public class BillControllerImpl extends AbstractController<Bill, BillDTO, Long> 
     }
 
     @Override
-    protected AbstractManager<Bill> getManager() {
+    protected BillManager getManager() {
         return this.manager;
     }
 

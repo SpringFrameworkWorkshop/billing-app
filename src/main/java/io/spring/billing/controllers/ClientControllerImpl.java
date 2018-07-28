@@ -22,7 +22,7 @@ public class ClientControllerImpl extends AbstractController<Client, ClientDTO, 
     }
 
     @Override
-    protected AbstractManager<Client> getManager() {
+    protected ClientManager getManager() {
         return this.manager;
     }
 

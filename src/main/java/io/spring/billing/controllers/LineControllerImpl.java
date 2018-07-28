@@ -22,7 +22,7 @@ public class LineControllerImpl extends AbstractController<Line, LineDTO, Long> 
     }
 
     @Override
-    protected AbstractManager<Line> getManager() {
+    protected LineManager getManager() {
         return this.manager;
     }
 
