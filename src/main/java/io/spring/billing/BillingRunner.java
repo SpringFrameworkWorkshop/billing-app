@@ -28,6 +28,9 @@ public class BillingRunner {
             option = generateMenu().play();
             if (option != null) {
                 switch (option) {
+                    case "1.0":
+                        System.out.println(ClientManager.getInstance().findByEmail(selectEmail()));
+                        break;
                     case "1.1":
                         System.out.println(ClientManager.getInstance().findAll());
                         break;
@@ -37,6 +40,9 @@ public class BillingRunner {
                     case "1.3":
                         ClientManager.getInstance().delete(selectClient());
                         break;
+                    case "2.0":
+                        System.out.println(ProductManager.getInstance().findProductByPriceLessThan(selectPrice()));
+                        break;
                     case "2.1":
                         System.out.println(ProductManager.getInstance().findAll());
                         break;
@@ -45,6 +51,9 @@ public class BillingRunner {
                         break;
                     case "2.3":
                         ProductManager.getInstance().delete(selectProduct());
+                        break;
+                    case "3.0":
+                        System.out.println(BillManager.getInstance().findBillByProductAndQuantityGreaterThan(selectProductId(), selectQuantity()));
                         break;
                     case "3.1":
                         System.out.println(BillManager.getInstance().findAll());
@@ -76,18 +85,21 @@ public class BillingRunner {
 
     private static Menu generateMenu() {
         io.spring.commandlinemenu.Menu submenu1 = MenuBuilder.createSubMenu("CLIENTS", 1)
+                .addSimpleOption(0, "Find by email")
                 .addSimpleOption(1, "List")
                 .addSimpleOption(2, "New")
                 .addSimpleOption(3, "Delete")
                 .addExitOption(4, "Back")
                 .build();
         Menu submenu2 = MenuBuilder.createSubMenu("PRODUCTS", 2)
+                .addSimpleOption(0, "Find by price less than")
                 .addSimpleOption(1, "List")
                 .addSimpleOption(2, "New")
                 .addSimpleOption(3, "Delete")
                 .addExitOption(4, "Back")
                 .build();
         Menu submenu3 = MenuBuilder.createSubMenu("BILLS", 3)
+                .addSimpleOption(0, "Find by product and quantity greater than")
                 .addSimpleOption(1, "List")
                 .addSimpleOption(2, "New")
                 .addSimpleOption(3, "Delete")
@@ -107,6 +119,25 @@ public class BillingRunner {
                 .addSubMenuOption("Lines", submenu4)
                 .addExitOption(5, "Exit")
                 .build();
+    }
+
+    private static String selectEmail() {
+        System.out.println("Introduce an email");
+        return in.nextLine();
+    }
+
+    private static Double selectPrice() {
+        System.out.println("Introduce a price");
+        return in.nextDouble();
+    }
+
+    private static Long selectProductId() {
+        return selectProduct().getId();
+    }
+
+    private static Integer selectQuantity() {
+        System.out.println("Introduce a quantity");
+        return in.nextInt();
     }
 
     private static Client selectClient() {

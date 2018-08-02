@@ -12,6 +12,9 @@ import java.util.List;
 @Setter
 @Entity
 @EqualsAndHashCode(of = {"id"})
+@NamedQueries({
+        @NamedQuery(name="Client.findByEmail", query="SELECT c FROM Client c WHERE c.email = :email")
+})
 public class Client implements BillingEntity {
 
     @Id

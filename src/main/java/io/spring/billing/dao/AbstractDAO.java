@@ -10,7 +10,7 @@ import java.util.List;
 
 public abstract class AbstractDAO<T extends BillingEntity> {
 
-    private static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("billing");
+    protected static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("billing");
 
     private Class<T> clazz;
 

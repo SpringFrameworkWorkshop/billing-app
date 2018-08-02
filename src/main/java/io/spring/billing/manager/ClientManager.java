@@ -3,6 +3,8 @@ package io.spring.billing.manager;
 import io.spring.billing.dao.ClientDAO;
 import io.spring.billing.entities.Client;
 
+import java.util.List;
+
 public class ClientManager extends AbstractManager<Client> {
 
 	private static ClientManager instance;
@@ -20,5 +22,9 @@ public class ClientManager extends AbstractManager<Client> {
 	@Override
 	public ClientDAO getDao() {
 		return ClientDAO.getInstance();
+	}
+
+	public List<Client> findByEmail(final String email) {
+		return getDao().findByEmail(email);
 	}
 }

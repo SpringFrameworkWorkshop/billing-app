@@ -10,6 +10,10 @@ import javax.persistence.*;
 @Setter
 @Entity
 @EqualsAndHashCode(of = {"id"})
+@NamedQueries({
+        @NamedQuery(name="Line.findBillByProductAndQuantityGreaterThan",
+                query="SELECT DISTINCT l.bill FROM Line l WHERE l.product.id = :id AND l.quantity >= :quantity")
+})
 public class Line implements BillingEntity {
 
     @Id

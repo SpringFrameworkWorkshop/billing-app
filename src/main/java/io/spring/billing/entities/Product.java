@@ -10,6 +10,10 @@ import javax.persistence.*;
 @Setter
 @Entity
 @EqualsAndHashCode(of = {"id"})
+@NamedQueries({
+        @NamedQuery(name="Product.findProductByPriceLessThan",
+                query="SELECT p FROM Product p WHERE p.price < :price")
+})
 public class Product implements BillingEntity {
 
     @Id
