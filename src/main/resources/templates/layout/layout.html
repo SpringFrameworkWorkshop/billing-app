@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	  >
 <head th:fragment="head">
 <meta charset="UTF-8" />
 <title th:text="'Billing App - ' + ${title}"></title>
@@ -18,6 +19,11 @@
 			<div class="collapse navbar-collapse">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item"><a class="nav-link" href="" th:href="@{/clients}">Home</a></li>
+					<li class="nav-item">
+						<form th:action="@{/logout}" method="post">
+							<input type="submit" value="Sign Out"/>
+						</form>
+					</li>
 				</ul>
 			</div>
 		</nav>
@@ -33,6 +39,7 @@
 	<footer th:fragment="footer" class="container">
 		<hr />
 		<p style="text-align: center;">Pablo Benito González<br />
+			Antonio Vizuete Sanchis<br />
 			&copy; Spring Framework WorkShop 2018<br />
 			Powered by <a href="https://projects.spring.io/spring-boot/">Spring Boot</a> y <a href="http://www.thymeleaf.org">Thymeleaf</a>
 		</p>
