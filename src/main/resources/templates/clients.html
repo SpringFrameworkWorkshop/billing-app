@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layout/layout :: head"></head>
 <body>
 
@@ -20,8 +21,8 @@
 							<th class="text-center">Surname</th>
 							<th class="text-center">Email</th>
 							<th class="text-center">Since</th>
-							<th class="text-center">Add New Bill</th>
-							<th class="text-center">Delete Bill</th>
+							<th class="text-center" sec:authorize-url="/bill-new/**">Add New Bill</th>
+							<th class="text-center" sec:authorize-url="/client-delete/**">Delete Client</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -31,8 +32,8 @@
 							<td class="text-center" th:text="${client.surname}"></td>
 							<td class="text-center" th:text="${client.email}"></td>
 							<td class="text-center" th:text="${client.audit.createOn}"></td>
-							<td class="text-center"><a class="btn btn-success btn-xs" th:href="@{'/bill-new/' + ${client.id}}" th:text="'Add'"></a></td>
-							<td class="text-center"><a class="btn btn-danger btn-xs" th:href="@{'/client-delete/' + ${client.id}}" th:text="'Remove'" onclick="return confirm('Are you sure?');"></a></td>
+							<td class="text-center" sec:authorize-url="/bill-new/**"><a class="btn btn-success btn-xs" th:href="@{'/bill-new/' + ${client.id}}" th:text="'Add'"></a></td>
+							<td class="text-center" sec:authorize-url="/client-delete/**"><a class="btn btn-danger btn-xs" th:href="@{'/client-delete/' + ${client.id}}" th:text="'Remove'" onclick="return confirm('Are you sure?');"></a></td>
 						</tr>
 					</tbody>
 

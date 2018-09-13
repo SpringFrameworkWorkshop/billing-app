@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	  >
 <head th:fragment="head">
 <meta charset="UTF-8" />
@@ -19,16 +19,12 @@
 			</button>
 			<div class="collapse navbar-collapse">
 				<ul class="navbar-nav mr-auto">
-					<li class="nav-item"  sec:authorize="isFullyAuthenticated()">
-						Welcome [[${#httpServletRequest.remoteUser}]]
-					</li>
 					<li class="nav-item"><a class="nav-link" href="" th:href="@{/clients}">Home</a></li>
-					<li class="nav-item" sec:authorize="isFullyAuthenticated()">
-						<form th:action="@{/logout}" method="post">
-							<input type="submit" value="Sign Out"/>
-						</form>
-					</li>
+					<form class="form-inline" sec:authorize="isFullyAuthenticated()" th:action="@{/logout}" method="post">
+						<button class="btn btn-link" type="submit">Sing Out</button>
+					</form>
 				</ul>
+				<span class="navbar-text" sec:authorize="isFullyAuthenticated()" sec:authentication="name"></span>
 			</div>
 		</nav>
 		

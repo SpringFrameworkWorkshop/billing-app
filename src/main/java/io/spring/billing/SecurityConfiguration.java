@@ -16,6 +16,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
       .passwordEncoder(org.springframework.security.crypto.password.NoOpPasswordEncoder.getInstance())
       .withUser("user1").password("secret1").roles("USER")
       .and()
+      .withUser("supervisor1").password("secret1").roles("USER", "SUPERVISOR")
+      .and()
       .withUser("admin1").password("secret1").roles("USER", "ADMIN");
   }
 
@@ -24,7 +26,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     http
         .authorizeRequests()
             .antMatchers("/","/css/**","/js/**","/images/**","/login","/logout").permitAll()
-            .antMatchers("/bill-*/**").hasRole("ADMIN")
+            .antMatchers("/bill-*/**").hasAnyRole("SUPERVISOR","ADMIN")
+            .antMatchers("/*-delete/**").hasAnyRole("ADMIN")
             .anyRequest().authenticated()
             .and()
         .formLogin()
