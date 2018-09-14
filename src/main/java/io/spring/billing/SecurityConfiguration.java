@@ -13,21 +13,23 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-  @Autowired
   private UserDetailsService userDetailsServiceImpl;
 
-  @Autowired
   private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+  @Autowired
+  public SecurityConfiguration(
+    final UserDetailsService userDetailsServiceImpl,
+    final BCryptPasswordEncoder bCryptPasswordEncoder)
+  {
+    this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    this.userDetailsServiceImpl = userDetailsServiceImpl;
+  }
 
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    auth.inMemoryAuthentication()
-      .passwordEncoder(org.springframework.security.crypto.password.NoOpPasswordEncoder.getInstance())
-      .withUser("user1").password("secret1").roles("USER")
-      .and()
-      .withUser("supervisor1").password("secret1").roles("USER", "SUPERVISOR")
-      .and()
-      .withUser("admin1").password("secret1").roles("USER", "ADMIN");
+    auth.userDetailsService(userDetailsServiceImpl)
+      .passwordEncoder(bCryptPasswordEncoder);
   }
 
   @Override
