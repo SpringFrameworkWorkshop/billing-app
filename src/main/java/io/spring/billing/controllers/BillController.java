@@ -9,6 +9,7 @@ import io.spring.billing.manager.ClientManager;
 import io.spring.billing.manager.ProductManager;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -48,6 +49,7 @@ public class BillController {
     }
 
     @RequestMapping(value = "/bill-delete/{id}", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ADMIN')")
     public String delete(@PathVariable(value = "id") Long id, RedirectAttributes flash) {
 
         Bill bill = billManager.get(id);
